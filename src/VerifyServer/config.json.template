@@ -1,0 +1,16 @@
+{
+    "email": {
+      "user": "YOUR_EMAIL_ADDRESS",
+      "pass": "YOUR_EMAIL_AUTH_CODE"
+    },
+    "mysql": {
+        "host": "YOUR_MYSQL_HOST",
+        "port": YOUR_MYSQL_PORT,
+        "passwd": "YOUR_MYSQL_PASSWORD"
+    },
+    "redis": {
+        "host": "YOUR_REDIS_HOST",
+        "port": YOUR_REDIS_PORT,
+        "passwd": "YOUR_REDIS_PASSWORD"
+    }
+}

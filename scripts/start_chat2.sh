@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+BIN_DIR="$PROJECT_DIR/bin"
+
+echo "Starting ChatServer2..."
+cd "$BIN_DIR"
+./ChatServer2
