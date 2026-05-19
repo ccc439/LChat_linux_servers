@@ -15,11 +15,16 @@ CTestTestfile.cmake
 # ============================================
 # 配置文件（包含敏感信息，严禁提交）
 # ============================================
+# 忽略所有实际的配置文件
 **/config.ini
 **/*.ini
+!/**/*.ini.template
 **/config.json
 **/*.json
-config/
+!/**/*.json.template
+# 但保留模板文件
+!**/config.ini.template
+!**/config.json.template
 
 # ============================================
 # IDE 和编辑器文件

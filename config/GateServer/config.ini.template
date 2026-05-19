@@ -1,0 +1,27 @@
+[GateServer]
+# 网关服务器监听端口（客户端连接端口）
+Port = 8080
+
+[VerifyServer]
+# 验证码服务地址（gRPC）
+Host = 127.0.0.1
+Port = 50051
+
+[Mysql]
+# MySQL数据库配置
+Host = YOUR_MYSQL_HOST
+Port = YOUR_MYSQL_PORT
+User = YOUR_MYSQL_USER
+Passwd = YOUR_MYSQL_PASSWORD
+Schema = YOUR_DATABASE_NAME
+
+[Redis]
+# Redis缓存配置
+Host = YOUR_REDIS_HOST
+Port = YOUR_REDIS_PORT
+Passwd = YOUR_REDIS_PASSWORD
+
+[StatusServer]
+# 状态服务器地址（gRPC）
+Host = 127.0.0.1
+Port = 50052

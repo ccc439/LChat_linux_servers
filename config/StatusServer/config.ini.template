@@ -1,0 +1,43 @@
+[GateServer]
+# 网关服务器端口
+Port = 8080
+
+[VerifyServer]
+# 验证码服务地址
+Host = 127.0.0.1
+Port = 50051
+
+[Mysql]
+# MySQL数据库配置
+Host = YOUR_MYSQL_HOST
+Port = YOUR_MYSQL_PORT
+User = YOUR_MYSQL_USER
+Passwd = YOUR_MYSQL_PASSWORD
+Schema = YOUR_DATABASE_NAME
+
+[Redis]
+# Redis缓存配置
+Host = YOUR_REDIS_HOST
+Port = YOUR_REDIS_PORT
+Passwd = YOUR_REDIS_PASSWORD
+
+[StatusServer]
+# 状态服务器配置
+Host = 127.0.0.1
+Port = 50052
+
+[chatservers]
+# 管理的聊天服务器列表（逗号分隔）
+Name = chatserver1,chatserver2
+
+[chatserver1]
+# 聊天服务器1配置
+Name = chatserver1
+Host = 127.0.0.1
+Port = 8090
+
+[chatserver2]
+# 聊天服务器2配置
+Name = chatserver2
+Host = 127.0.0.1
+Port = 8091
