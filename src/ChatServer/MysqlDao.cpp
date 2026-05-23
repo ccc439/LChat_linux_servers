@@ -1,4 +1,4 @@
-﻿#include "MysqlDao.h"
+#include "MysqlDao.h"
 #include "ConfigMgr.h"
 
 MysqlDao::MysqlDao()
@@ -32,15 +32,15 @@ int MysqlDao::RegUser(const std::string& name, const std::string& email, const s
 
 		stmt->execute();
 
-	   std::unique_ptr<sql::Statement> stmtResult(con->_con->createStatement());
-	  std::unique_ptr<sql::ResultSet> res(stmtResult->executeQuery("SELECT @result AS result"));
-	  if (res->next()) {
+	    std::unique_ptr<sql::Statement> stmtResult(con->_con->createStatement());
+		std::unique_ptr<sql::ResultSet> res(stmtResult->executeQuery("SELECT @result AS result"));
+	  	if (res->next()) {
 	       int result = res->getInt("result");
-	      std::cout << "Result: " << result << std::endl;
-		  pool_->returnConnection(std::move(con));
-		  return result;
-	  }
-	  pool_->returnConnection(std::move(con));
+			std::cout << "Result: " << result << std::endl;
+			pool_->returnConnection(std::move(con));
+			return result;
+		}
+		pool_->returnConnection(std::move(con));
 		return -1;
 	}
 	catch (sql::SQLException& e) {
@@ -366,6 +366,14 @@ bool MysqlDao::AddFriend(const int& from, const int& to, std::string back_name) 
 	}
 
 	Defer defer([this, &con]() {
+		// 确保归还连接前恢复 autocommit 状态
+		try {
+			if (con && con->_con) {
+				con->_con->setAutoCommit(true);
+			}
+		} catch (...) {
+			// 忽略异常，确保连接能归还
+		}
 		pool_->returnConnection(std::move(con));
 		});
 

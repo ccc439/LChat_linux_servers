@@ -1,4 +1,4 @@
-﻿#include "MysqlDao.h"
+#include "MysqlDao.h"
 #include "ConfigMgr.h"
 
 MysqlDao::MysqlDao()
@@ -362,6 +362,14 @@ bool MysqlDao::AddFriend(const int& from, const int& to, std::string back_name) 
 	}
 
 	Defer defer([this, &con]() {
+		// 确保归还连接前恢复 autocommit 状态
+		try {
+			if (con && con->_con) {
+				con->_con->setAutoCommit(true);
+			}
+		} catch (...) {
+			// 忽略异常，确保连接能归还
+		}
 		pool_->returnConnection(std::move(con));
 		});
 
