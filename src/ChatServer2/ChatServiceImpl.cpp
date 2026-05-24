@@ -33,7 +33,7 @@ Status ChatServiceImpl::NotifyAddFriend(ServerContext* context, const AddFriendR
 	rtvalue["applyuid"] = request->applyuid();
 	rtvalue["name"] = request->name();
 	rtvalue["desc"] = request->desc();
-	//定位
+	
 	rtvalue["icon"] = request->icon();
 	rtvalue["nick"] = request->nick();
 	rtvalue["sex"] = request->sex();
