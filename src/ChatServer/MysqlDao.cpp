@@ -379,47 +379,47 @@ bool MysqlDao::AddFriend(const int& from, const int& to, std::string back_name) 
 
 	try {
 
-		//
+		// 开启事务
 		con->_con->setAutoCommit(false);
 
-		//
+		// 第一条插入：from -> to
 		std::unique_ptr<sql::PreparedStatement> pstmt(con->_con->prepareStatement("INSERT IGNORE INTO friend(self_id, friend_id, back) "
 			"VALUES (?, ?, ?) "
 		));
-		//
-		pstmt->setInt(1, from); // from id
+		
+		pstmt->setInt(1, from);
 		pstmt->setInt(2, to);
 		pstmt->setString(3, back_name);
-		//
+		
 		int rowAffected = pstmt->executeUpdate();
 		if (rowAffected < 0) {
-			con->_con->rollback();
+			con->_con->rollback();// 失败回滚
 			return false;
 		}
 
-		//
+		// 第二条插入：to -> from
 		std::unique_ptr<sql::PreparedStatement> pstmt2(con->_con->prepareStatement("INSERT IGNORE INTO friend(self_id, friend_id, back) "
 			"VALUES (?, ?, ?) "
 		));
-		//
-		pstmt2->setInt(1, to); // from id
+		
+		pstmt2->setInt(1, to);
 		pstmt2->setInt(2, from);
 		pstmt2->setString(3, "");
-		//
+		
 		int rowAffected2 = pstmt2->executeUpdate();
 		if (rowAffected2 < 0) {
-			con->_con->rollback();
+			con->_con->rollback();// 第二条失败也回滚
 			return false;
 		}
 
-		//
+		// 两条插入都成功：提交事务
 		con->_con->commit();
 		std::cout << "addfriend insert friends success" << std::endl;
 
 		return true;
 	}
 	catch (sql::SQLException& e) {
-		//
+		// 异常回滚 + 详细日志
 		if (con) {
 			con->_con->rollback();
 		}
@@ -428,7 +428,6 @@ bool MysqlDao::AddFriend(const int& from, const int& to, std::string back_name) 
 		std::cerr << ", SQLState: " << e.getSQLState() << " )" << std::endl;
 		return false;
 	}
-
 
 	return true;
 }
